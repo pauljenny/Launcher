@@ -145,7 +145,7 @@ namespace LauncherShyax
             catch (Exception e)
             {
                 DownloaderBox dlBox = new DownloaderBox();
-                dlBox.Show();
+                dlBox.Show(this);
                 dlBox.Download(nodeList, mpqFiles, Path.Combine(_wowDir, dataDir));
             }
         }
