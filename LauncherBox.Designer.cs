@@ -55,10 +55,11 @@
             this.checkBoxCache.Location = new System.Drawing.Point(12, 331);
             this.checkBoxCache.Name = "checkBoxCache";
             this.checkBoxCache.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.checkBoxCache.Size = new System.Drawing.Size(94, 17);
+            this.checkBoxCache.Size = new System.Drawing.Size(95, 18);
             this.checkBoxCache.TabIndex = 1;
             this.checkBoxCache.Text = "Vider le cache";
             this.checkBoxCache.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.checkBoxCache.UseCompatibleTextRendering = true;
             this.checkBoxCache.UseVisualStyleBackColor = false;
             // 
             // labelStatut
@@ -114,9 +115,10 @@
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label1.Location = new System.Drawing.Point(36, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(131, 13);
+            this.label1.Size = new System.Drawing.Size(119, 17);
             this.label1.TabIndex = 8;
             this.label1.Text = "Serveur de connexion";
+            this.label1.UseCompatibleTextRendering = true;
             // 
             // label2
             // 
@@ -126,9 +128,10 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label2.Location = new System.Drawing.Point(36, 18);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 13);
+            this.label2.Size = new System.Drawing.Size(81, 17);
             this.label2.TabIndex = 9;
             this.label2.Text = "Serveur de jeu";
+            this.label2.UseCompatibleTextRendering = true;
             // 
             // pictureBoxRealm
             // 
@@ -157,7 +160,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.BackgroundImage = global::LauncherShyax.Properties.Resources.Background;
+            this.BackgroundImage = global::LauncherShyax.Properties.Resources.Sans_titre_18;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(650, 347);
             this.Controls.Add(this.pictureBoxWorld);

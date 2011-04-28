@@ -95,6 +95,13 @@ namespace LauncherShyax.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Sans_titre_18 {
+            get {
+                object obj = ResourceManager.GetObject("Sans-titre-18", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap up {
             get {
                 object obj = ResourceManager.GetObject("up", resourceCulture);

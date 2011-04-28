@@ -43,7 +43,13 @@ namespace LauncherShyax
 
         }
 
-        public void Download(XmlNodeList nodeList, FileInfo[] mpqFiles, string wowDir)
+        /// <summary>
+        /// Download the MPQ Files which are in nodeList and not in mpqFiles
+        /// </summary>
+        /// <param name="nodeList">Node List existing in version.xml</param>
+        /// <param name="mpqFiles">MPQ Files existing in Data/ directory</param>
+        /// <param name="dataDir">Absolute path to Data/ directory</param>
+        public void Download(XmlNodeList nodeList, FileInfo[] mpqFiles, string dataDir)
         {
             foreach (XmlNode node in nodeList)
             {
@@ -56,12 +62,13 @@ namespace LauncherShyax
                     webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(webClient_DownloadProgressChanged);
                     webClient2.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient2_DownloadStringCompleted);
                     webClient2.DownloadStringAsync(new Uri(node.Attributes["desc"].Value));
-                    webClient.DownloadFileAsync(new Uri(node.Attributes["lien"].Value), Path.Combine(wowDir, node.InnerText));
+                    webClient.DownloadFileAsync(new Uri(node.Attributes["lien"].Value), Path.Combine(dataDir, node.InnerText));
                 }
             }
             buttonClose.Visible = true;
         }
 
+        #region Events
         void webClient2_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             labelMaj.Text = e.Result;
@@ -76,5 +83,6 @@ namespace LauncherShyax
         {
             Close();
         }
+        #endregion
     }
 }

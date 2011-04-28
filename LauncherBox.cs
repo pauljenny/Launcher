@@ -35,6 +35,7 @@ namespace LauncherShyax
 {
     public partial class Launcher : Form
     {
+        #region Variables
         public bool isAllowedToDeleteCache
         {
             get { return checkBoxCache.Checked; }
@@ -47,6 +48,8 @@ namespace LauncherShyax
 
         public bool wowFound;
         private string _wowDir;
+        #endregion
+
         public Launcher()
         {
             InitializeComponent();
@@ -61,6 +64,9 @@ namespace LauncherShyax
             labelStatut.Text = "En attente de l'utilisateur...";
         }
 
+        /// <summary>
+        /// Find the game's directory locally (in the directory of the launcher) then in the registry
+        /// </summary>
         private void FindWoWDir()
         {
             labelStatut.Text = "Recherche du répertoire d'installation de World Of Warcraft...";
@@ -109,22 +115,10 @@ namespace LauncherShyax
             }
         }
 
-        private void DeleteCache()
-        {
-            const string cacheDir = "Cache";
-            DirectoryInfo cacheInfo = new DirectoryInfo(Path.Combine(_wowDir, cacheDir));
-            if (cacheInfo.Exists)
-                cacheInfo.Delete(true);
-        }
-
-        private void LaunchGame()
-        {
-            const string wowExe = "Wow.exe";
-            ProcessStartInfo wowStartInfo = new ProcessStartInfo(Path.Combine(_wowDir, wowExe));
-            Process.Start(wowStartInfo);
-            Close();
-        }
-
+        /// <summary>
+        /// Verify if we have the latest version of the server using version.xml
+        /// If the file of the latest is not found, DownloaderBox is launched
+        /// </summary>
         private void VerifyVersion()
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -156,6 +150,9 @@ namespace LauncherShyax
             }
         }
 
+        /// <summary>
+        /// Verify the status of the realm server and the world server using worldPort, realmPort and ipAddress
+        /// </summary>
         private void VerifyStatus()
         {
             IPAddress[] address = Dns.GetHostAddresses(ipAddress);
@@ -183,6 +180,9 @@ namespace LauncherShyax
             pictureBoxWorld.Visible = true;
         }
 
+        /// <summary>
+        /// Create a new realmlist.wtf
+        /// </summary>
         private void ChangeRealmlist()
         {
             const string dataDir = "Data";
@@ -191,14 +191,38 @@ namespace LauncherShyax
             FileInfo realmList = new FileInfo(Path.Combine(_wowDir, dataDir, localeDir, realmFile));
             if (realmList != null)
             {
-                realmList.Delete();                
+                realmList.Delete();
             }
             FileStream stream = realmList.Create();
-            byte[] bytes = Encoding.UTF8.GetBytes(("set realmlist "+ipAddress+":"+worldPort));
+            byte[] bytes = Encoding.UTF8.GetBytes(("set realmlist " + ipAddress + ":" + worldPort));
             stream.Write(bytes, 0, bytes.Length);
             stream.Dispose();
         }
 
+        /// <summary>
+        /// Delete the Cache/ directory
+        /// Call only when isAllowedToDeleteCache is true !
+        /// </summary>
+        private void DeleteCache()
+        {
+            const string cacheDir = "Cache";
+            DirectoryInfo cacheInfo = new DirectoryInfo(Path.Combine(_wowDir, cacheDir));
+            if (cacheInfo.Exists)
+                cacheInfo.Delete(true);
+        }
+
+        /// <summary>
+        /// Launch the game and close the launcher
+        /// </summary>
+        private void LaunchGame()
+        {
+            const string wowExe = "Wow.exe";
+            ProcessStartInfo wowStartInfo = new ProcessStartInfo(Path.Combine(_wowDir, wowExe));
+            Process.Start(wowStartInfo);
+            Close();
+        }
+
+        #region Events
         private void pictureBoxLancer_Click(object sender, EventArgs e)
         {
             if (isAllowedToDeleteCache)
@@ -216,5 +240,6 @@ namespace LauncherShyax
             HelpBox box = new HelpBox();
             box.ShowDialog();
         }
+        #endregion
     }
 }
