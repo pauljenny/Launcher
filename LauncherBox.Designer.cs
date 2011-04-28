@@ -177,7 +177,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Launcher WoW";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.LauncherBox_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLancer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3Close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelp)).EndInit();

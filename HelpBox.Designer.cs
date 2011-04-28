@@ -42,8 +42,9 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(260, 79);
             this.label1.TabIndex = 0;
-            this.label1.Text = "WoWLauncher est une application écrite en C# avec le Framework .NET 4.\r\nPour tout" +
-                "es informations supplémentaires, allez sur Zone Emu.\r\n\r\n© Shyax 2011\r\n";
+            this.label1.Text = "WoWLauncher est une application écrite en C# avec le Framework .NET 4 distribué s" +
+                "ous licence GNU GPL.\r\nPour toutes informations supplémentaires, allez sur Zone E" +
+                "mu.\r\n\r\n© Shyax 2011\r\n";
             // 
             // pictureBox1
             // 
