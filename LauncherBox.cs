@@ -43,6 +43,9 @@ namespace LauncherShyax
         }
 
         public const string ipAddress = "127.0.0.1";
+        public const string siteAddress = "http://127.0.0.1";
+        public const string forumAddress = "http://127.0.0.1/forum/";
+        public const string bugTrackerAddress = "http://127.0.0.1/tracker/";
         public const int realmPort = 3724;
         public const int worldPort = 8085;
 
@@ -61,7 +64,7 @@ namespace LauncherShyax
             VerifyVersion();
             VerifyStatus();
             ChangeRealmlist();
-            labelStatut.Text = "En attente de l'utilisateur...";
+            AddLinks();
         }
 
         /// <summary>
@@ -69,7 +72,6 @@ namespace LauncherShyax
         /// </summary>
         private void FindWoWDir()
         {
-            labelStatut.Text = "Recherche du répertoire d'installation de World Of Warcraft...";
             // Look Locally before in registry
             _wowDir = Path.GetFullPath(System.Reflection.Assembly.GetExecutingAssembly().Location);
             const string wowExe = "Wow.exe";
@@ -175,7 +177,7 @@ namespace LauncherShyax
             }
             catch (Exception e)
             {
-                pictureBoxWorld.Image = LauncherShyax.Properties.Resources.down;
+                pictureBoxWorld.Image = LauncherShyax.Properties.Resources.up;
             }
             pictureBoxWorld.Visible = true;
         }
@@ -199,6 +201,12 @@ namespace LauncherShyax
             stream.Dispose();
         }
 
+        private void AddLinks()
+        {
+            linkLabelSite.Links.Add(0, linkLabelSite.Text.Length, siteAddress);
+            linkLabelForum.Links.Add(0, linkLabelForum.Text.Length, forumAddress);
+            linkLabelBugTracker.Links.Add(0, linkLabelBugTracker.Text.Length, bugTrackerAddress);
+        }
         /// <summary>
         /// Delete the Cache/ directory
         /// Call only when isAllowedToDeleteCache is true !
@@ -239,6 +247,24 @@ namespace LauncherShyax
         {
             HelpBox box = new HelpBox();
             box.ShowDialog();
+        }
+
+        private void linkLabelSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabelSite.LinkVisited = true;
+            Process.Start(siteAddress);
+        }
+
+        private void linkLabelForum_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabelForum.LinkVisited = true;
+            Process.Start(forumAddress);
+        }
+
+        private void linkLabelBugTracker_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabelBugTracker.LinkVisited = true;
+            Process.Start(bugTrackerAddress);
         }
         #endregion
     }

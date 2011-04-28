@@ -38,6 +38,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBoxRealm = new System.Windows.Forms.PictureBox();
             this.pictureBoxWorld = new System.Windows.Forms.PictureBox();
+            this.linkLabelSite = new System.Windows.Forms.LinkLabel();
+            this.linkLabelForum = new System.Windows.Forms.LinkLabel();
+            this.linkLabelBugTracker = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLancer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3Close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelp)).BeginInit();
@@ -147,13 +150,55 @@
             // pictureBoxWorld
             // 
             this.pictureBoxWorld.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxWorld.Image = global::LauncherShyax.Properties.Resources.up;
+            this.pictureBoxWorld.Image = global::LauncherShyax.Properties.Resources.down;
             this.pictureBoxWorld.Location = new System.Drawing.Point(173, 18);
             this.pictureBoxWorld.Name = "pictureBoxWorld";
             this.pictureBoxWorld.Size = new System.Drawing.Size(10, 14);
             this.pictureBoxWorld.TabIndex = 11;
             this.pictureBoxWorld.TabStop = false;
             this.pictureBoxWorld.Visible = false;
+            // 
+            // linkLabelSite
+            // 
+            this.linkLabelSite.AutoSize = true;
+            this.linkLabelSite.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabelSite.LinkColor = System.Drawing.SystemColors.ActiveCaption;
+            this.linkLabelSite.Location = new System.Drawing.Point(494, 244);
+            this.linkLabelSite.Name = "linkLabelSite";
+            this.linkLabelSite.Size = new System.Drawing.Size(80, 13);
+            this.linkLabelSite.TabIndex = 12;
+            this.linkLabelSite.TabStop = true;
+            this.linkLabelSite.Text = "Lien vers le site";
+            this.linkLabelSite.VisitedLinkColor = System.Drawing.SystemColors.InactiveCaption;
+            this.linkLabelSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSite_LinkClicked);
+            // 
+            // linkLabelForum
+            // 
+            this.linkLabelForum.AutoSize = true;
+            this.linkLabelForum.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabelForum.LinkColor = System.Drawing.SystemColors.ActiveCaption;
+            this.linkLabelForum.Location = new System.Drawing.Point(494, 266);
+            this.linkLabelForum.Name = "linkLabelForum";
+            this.linkLabelForum.Size = new System.Drawing.Size(90, 13);
+            this.linkLabelForum.TabIndex = 13;
+            this.linkLabelForum.TabStop = true;
+            this.linkLabelForum.Text = "Lien vers le forum";
+            this.linkLabelForum.VisitedLinkColor = System.Drawing.SystemColors.InactiveCaption;
+            this.linkLabelForum.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelForum_LinkClicked);
+            // 
+            // linkLabelBugTracker
+            // 
+            this.linkLabelBugTracker.AutoSize = true;
+            this.linkLabelBugTracker.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabelBugTracker.LinkColor = System.Drawing.SystemColors.ActiveCaption;
+            this.linkLabelBugTracker.Location = new System.Drawing.Point(494, 290);
+            this.linkLabelBugTracker.Name = "linkLabelBugTracker";
+            this.linkLabelBugTracker.Size = new System.Drawing.Size(118, 13);
+            this.linkLabelBugTracker.TabIndex = 14;
+            this.linkLabelBugTracker.TabStop = true;
+            this.linkLabelBugTracker.Text = "Lien vers le bug tracker";
+            this.linkLabelBugTracker.VisitedLinkColor = System.Drawing.SystemColors.InactiveCaption;
+            this.linkLabelBugTracker.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelBugTracker_LinkClicked);
             // 
             // Launcher
             // 
@@ -163,6 +208,9 @@
             this.BackgroundImage = global::LauncherShyax.Properties.Resources.Sans_titre_18;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(650, 347);
+            this.Controls.Add(this.linkLabelBugTracker);
+            this.Controls.Add(this.linkLabelForum);
+            this.Controls.Add(this.linkLabelSite);
             this.Controls.Add(this.pictureBoxWorld);
             this.Controls.Add(this.pictureBoxRealm);
             this.Controls.Add(this.label2);
@@ -202,6 +250,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBoxRealm;
         private System.Windows.Forms.PictureBox pictureBoxWorld;
+        private System.Windows.Forms.LinkLabel linkLabelSite;
+        private System.Windows.Forms.LinkLabel linkLabelForum;
+        private System.Windows.Forms.LinkLabel linkLabelBugTracker;
     }
 }
 
