@@ -16,8 +16,10 @@
   ce programme ; si ce n’est pas le cas, consultez :
   <http://www.gnu.org/licenses/>.
  * */
+
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -38,19 +40,42 @@ namespace LauncherShyax
         #region Variables
         public bool isAllowedToDeleteCache
         {
-            get { return checkBoxCache.Checked; }
-            set { checkBoxCache.Checked = value; }
+            get { return Configuration.Default.IsAllowedToDeleteCache; }
+            set { Configuration.Default.IsAllowedToDeleteCache = value; }
+        }
+        public string hostAddress
+        {
+            get { return Configuration.Default.HostAddress; }
+        }
+        public string siteAddress
+        {
+            get { return Configuration.Default.SiteAddress; }
+        }
+        public string forumAddress
+        {
+            get { return Configuration.Default.ForumAddress; }
+        }
+        public string bugTrackerAddress
+        {
+            get { return Configuration.Default.BugTrackerAddress; }
+        }
+        public int realmPort
+        {
+            get { return Convert.ToInt32(Configuration.Default.RealmServerPort); }
+        }
+        public int worldPort
+        {
+            get { return Convert.ToInt32(Configuration.Default.WorldServerPort); }
         }
 
-        public const string ipAddress = "127.0.0.1";
-        public const string siteAddress = "http://127.0.0.1";
-        public const string forumAddress = "http://127.0.0.1/forum/";
-        public const string bugTrackerAddress = "http://127.0.0.1/tracker/";
-        public const int realmPort = 3724;
-        public const int worldPort = 8085;
-
-        public bool wowFound;
-        private string _wowDir;
+        public string _wowDir
+        {
+            get { return Configuration.Default.WoWDirectory; }
+            set 
+            { 
+                Configuration.Default.WoWDirectory = value;
+            }
+        }
         #endregion
 
         public Launcher()
@@ -65,6 +90,7 @@ namespace LauncherShyax
             VerifyStatus();
             ChangeRealmlist();
             AddLinks();
+            checkBoxCache.Checked = Configuration.Default.IsAllowedToDeleteCache;
         }
 
         /// <summary>
@@ -72,48 +98,54 @@ namespace LauncherShyax
         /// </summary>
         private void FindWoWDir()
         {
-            // Look Locally before in registry
-            _wowDir = Path.GetFullPath(System.Reflection.Assembly.GetExecutingAssembly().Location);
             const string wowExe = "Wow.exe";
             FileInfo wowInfo = new FileInfo(Path.Combine(_wowDir, wowExe));
             if (wowInfo.Exists)
             {
-                wowFound = true;
                 return;
             }
             else
             {
-                // Look In Registry
-                RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE");
-                if (key == null)
+                // Look Locally before in registry
+                _wowDir = Path.GetFullPath(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                FileInfo wowInfo2 = new FileInfo(Path.Combine(_wowDir, wowExe));
+                if (wowInfo2.Exists)
                 {
-                    labelStatut.Text = "World Of Warcraft non trouvé. Raison : Clé SOFTWARE";
                     return;
                 }
-                if (Environment.Is64BitProcess)
+                else
                 {
-                    key = key.OpenSubKey("Wow6432Node");
+                    // Look In Registry
+                    RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE");
                     if (key == null)
                     {
-                        labelStatut.Text = "World Of Warcraft non trouvé. Raison : Clé Wow6432Node";
+                        MessageBox.Show("World Of Warcraft non trouvé. Raison : Clé SOFTWARE");
                         return;
                     }
+                    if (Environment.Is64BitProcess)
+                    {
+                        key = key.OpenSubKey("Wow6432Node");
+                        if (key == null)
+                        {
+                            MessageBox.Show("World Of Warcraft non trouvé. Raison : Clé Wow6432Node");
+                            return;
+                        }
+                    }
+                    key = key.OpenSubKey("Blizzard Entertainment");
+                    if (key == null)
+                    {
+                        MessageBox.Show("World Of Warcraft non trouvé. Raison : Clé Blizzard Entertainment");
+                        return;
+                    }
+                    key = key.OpenSubKey("World of Warcraft");
+                    if (key == null)
+                    {
+                        MessageBox.Show("World Of Warcraft non trouvé. Raison : Clé World of Warcraft");
+                        return;
+                    }
+                    _wowDir = key.GetValue("InstallPath").ToString();
+                    key.Close();
                 }
-                key = key.OpenSubKey("Blizzard Entertainment");
-                if (key == null)
-                {
-                    labelStatut.Text = "World Of Warcraft non trouvé. Raison : Clé Blizzard Entertainment";
-                    return;
-                }
-                key = key.OpenSubKey("World of Warcraft");
-                if (key == null)
-                {
-                    labelStatut.Text = "World Of Warcraft non trouvé. Raison : Clé World of Warcraft";
-                    return;
-                }
-                _wowDir = key.GetValue("InstallPath").ToString();
-                key.Close();
-                wowFound = true;
             }
         }
 
@@ -126,11 +158,11 @@ namespace LauncherShyax
             XmlDocument xmlDoc = new XmlDocument();
             try
             {
-                xmlDoc.Load("http://"+ ipAddress + "/version.xml");
+                xmlDoc.Load("http://"+ hostAddress + "/version.xml");
             }
             catch (Exception e)
             {
-                labelStatut.Text = "XML non trouvé !";
+                MessageBox.Show("XML de MAJ non trouvé !");
                 return;
             }
             const string dataDir = "Data";
@@ -157,7 +189,7 @@ namespace LauncherShyax
         /// </summary>
         private void VerifyStatus()
         {
-            IPAddress[] address = Dns.GetHostAddresses(ipAddress);
+            IPAddress[] address = Dns.GetHostAddresses(hostAddress);
 
             Socket s = new Socket(AddressFamily.InterNetwork,
                 SocketType.Stream,
@@ -177,7 +209,7 @@ namespace LauncherShyax
             }
             catch (Exception e)
             {
-                pictureBoxWorld.Image = LauncherShyax.Properties.Resources.up;
+                pictureBoxWorld.Image = LauncherShyax.Properties.Resources.down;
             }
             pictureBoxWorld.Visible = true;
         }
@@ -196,7 +228,7 @@ namespace LauncherShyax
                 realmList.Delete();
             }
             FileStream stream = realmList.Create();
-            byte[] bytes = Encoding.UTF8.GetBytes(("set realmlist " + ipAddress + ":" + worldPort));
+            byte[] bytes = Encoding.UTF8.GetBytes(("set realmlist " + hostAddress + ":" + worldPort));
             stream.Write(bytes, 0, bytes.Length);
             stream.Dispose();
         }
@@ -207,6 +239,7 @@ namespace LauncherShyax
             linkLabelForum.Links.Add(0, linkLabelForum.Text.Length, forumAddress);
             linkLabelBugTracker.Links.Add(0, linkLabelBugTracker.Text.Length, bugTrackerAddress);
         }
+
         /// <summary>
         /// Delete the Cache/ directory
         /// Call only when isAllowedToDeleteCache is true !
@@ -227,14 +260,18 @@ namespace LauncherShyax
             const string wowExe = "Wow.exe";
             ProcessStartInfo wowStartInfo = new ProcessStartInfo(Path.Combine(_wowDir, wowExe));
             Process.Start(wowStartInfo);
+
             Close();
         }
 
         #region Events
         private void pictureBoxLancer_Click(object sender, EventArgs e)
         {
-            if (isAllowedToDeleteCache)
+            Configuration.Default.IsAllowedToDeleteCache = checkBoxCache.Checked;
+            Configuration.Default.Save();
+            if (checkBoxCache.Checked)
                 DeleteCache();
+
             LaunchGame();
         }
 

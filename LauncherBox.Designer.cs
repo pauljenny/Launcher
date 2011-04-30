@@ -150,7 +150,7 @@
             // pictureBoxWorld
             // 
             this.pictureBoxWorld.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxWorld.Image = global::LauncherShyax.Properties.Resources.down;
+            this.pictureBoxWorld.Image = global::LauncherShyax.Properties.Resources.up;
             this.pictureBoxWorld.Location = new System.Drawing.Point(173, 18);
             this.pictureBoxWorld.Name = "pictureBoxWorld";
             this.pictureBoxWorld.Size = new System.Drawing.Size(10, 14);

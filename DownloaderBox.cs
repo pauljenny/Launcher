@@ -51,21 +51,29 @@ namespace LauncherShyax
         /// <param name="dataDir">Absolute path to Data/ directory</param>
         public void Download(XmlNodeList nodeList, FileInfo[] mpqFiles, string dataDir)
         {
-            foreach (XmlNode node in nodeList)
+            DialogResult result = MessageBox.Show("Une nouvelle mise à jour a été trouvée !\r\n Télécharger ?", "Avertissement", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.Cancel)
             {
-                if (!mpqFiles.Contains(new FileInfo(node.InnerText)))
-                {
-                    // Have to create two WebClient
-                    WebClient webClient = new WebClient();
-                    WebClient webClient2 = new WebClient();
-                    labelDl.Text = "Téléchargement de la mise à jour : " + node.Attributes["nom"].Value;
-                    webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(webClient_DownloadProgressChanged);
-                    webClient2.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient2_DownloadStringCompleted);
-                    webClient2.DownloadStringAsync(new Uri(node.Attributes["desc"].Value));
-                    webClient.DownloadFileAsync(new Uri(node.Attributes["lien"].Value), Path.Combine(dataDir, node.InnerText));
-                }
+                Close();
             }
-            buttonClose.Visible = true;
+            else
+            {
+                foreach (XmlNode node in nodeList)
+                {
+                    if (!mpqFiles.Contains(new FileInfo(node.InnerText)))
+                    {
+                        // Have to create two WebClient
+                        WebClient webClient = new WebClient();
+                        WebClient webClient2 = new WebClient();
+                        labelDl.Text = "Téléchargement de la mise à jour : " + node.Attributes["nom"].Value;
+                        webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(webClient_DownloadProgressChanged);
+                        webClient2.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient2_DownloadStringCompleted);
+                        webClient2.DownloadStringAsync(new Uri(node.Attributes["desc"].Value));
+                        webClient.DownloadFileAsync(new Uri(node.Attributes["lien"].Value), Path.Combine(dataDir, node.InnerText));
+                    }
+                }
+                buttonClose.Visible = true;
+            }
         }
 
         #region Events

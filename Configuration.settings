@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LauncherShyax" GeneratedClassName="Configuration">
+  <Profiles />
+  <Settings>
+    <Setting Name="HostAddress" Description="NDD ou adresse IP du serveur" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">127.0.0.1</Value>
+    </Setting>
+    <Setting Name="SiteAddress" Description="URL du site internet du serveur" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://127.0.0.1</Value>
+    </Setting>
+    <Setting Name="ForumAddress" Description="URL du forum" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://127.0.0.1/forum/</Value>
+    </Setting>
+    <Setting Name="BugTrackerAddress" Description="URL du Bug Tracker" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://127.0.0.1/track</Value>
+    </Setting>
+    <Setting Name="IsAllowedToDeleteCache" Description="Autorise ou non la suppression du cache" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="WorldServerPort" Description="Port du serveur de jeu" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">8085</Value>
+    </Setting>
+    <Setting Name="RealmServerPort" Description="Port du serveur de connexion" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">3724</Value>
+    </Setting>
+    <Setting Name="WoWDirectory" Description="Dossier du jeu World Of Warcraft" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C://Users/Public/Games</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
